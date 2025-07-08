@@ -1,11 +1,75 @@
+
+import { useState, useEffect } from "react"
+import hero1 from "../../assets/hero1.webp"
+import hero2 from "../../assets/hero2.webp"
+import hero3 from "../../assets/hero3.webp"
+
 type HeroProps = {
   // for future use if needed
 }
 
 const Hero = (_: HeroProps) => {
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  const slides = [hero1, hero2, hero3]
+
+  // Auto slide functionality
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length)
+    }, 3000) // Change slide every 4 seconds
+
+    return () => clearInterval(slideInterval)
+  }, [slides.length])
+
   return (
-    <div>
-      <h1>this is hero</h1>
+    <div className="hero min-h-[500px] relative overflow-hidden">
+      {/* Background Images */}
+      {slides.map((slide, index) => (
+        <div
+          key={index}
+          className={`absolute inset-0 transition-opacity duration-1000 ${
+            index === currentSlide ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <img
+            src={slide || "/placeholder.svg"}
+            alt={`Hero slide ${index + 1}`}
+            className="w-full h-full object-cover"
+          />
+          {/* Overlay for readability */}
+          <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        </div>
+      ))}
+
+      {/* Content - Always visible */}
+      <div className="hero-content text-center relative z-10">
+        <div className="max-w-md">
+          <h1 className="text-5xl font-bold text-white drop-shadow-lg">
+            Perfect Gifts for
+            <span className="text-yellow-300"> Everyone</span>
+          </h1>
+          <p className="py-6 text-white drop-shadow-md">
+            Discover unique and thoughtful gifts that bring joy to your loved ones.
+          </p>
+          <div>
+            <button className="btn btn-primary btn-lg shadow-lg">Shop Now</button>
+          </div>
+        </div>
+      </div>
+
+      {/*  slide indicators */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentSlide(index)}
+            className={`w-4 h-4 rounded-full transition-all ${
+              index === currentSlide ? "bg-white" : "bg-white bg-opacity-50"
+            }`}
+          />
+        ))}
+      </div>
     </div>
   )
 }
