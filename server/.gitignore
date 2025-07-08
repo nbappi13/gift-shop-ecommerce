@@ -1,0 +1,10 @@
+node_modules/
+.env
+
+
+# Optional: add other common ignores
+dist/
+build/
+.DS_Store
+*.log
+
