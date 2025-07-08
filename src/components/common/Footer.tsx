@@ -1,8 +1,14 @@
-import React from 'react'
+type FooterProps = {
+  // for future use if needed
+}
 
-function Footer() {
+const Footer = (_: FooterProps) => {
   return (
-    <div>This is footer</div>
+    <footer>
+      <div>
+		<h1> this footer </h1>
+	  </div>
+    </footer>
   )
 }
 

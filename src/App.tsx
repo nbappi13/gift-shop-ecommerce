@@ -3,7 +3,11 @@ import Layout from "./components/layout/Layout"
 import Home from "./pages/Home"
 
 
-function App() {
+type AppProps = {
+  //  for future use if needed to add props
+}
+
+const App = (_: AppProps) => {
   return (
     <Router>
       <Layout>

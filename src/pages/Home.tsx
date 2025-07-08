@@ -1,8 +1,10 @@
-import type React from "react"
 import Hero from "../components/home/Hero"
 
+type HomeProps = {
+  // for future use if needed
+}
 
-const Home: React.FC = () => {
+const Home = (_: HomeProps) => {
   return (
     <div>
       <Hero />

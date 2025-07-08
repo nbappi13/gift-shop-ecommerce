@@ -1,8 +1,12 @@
-import React from 'react'
+type HeroProps = {
+  // for future use if needed
+}
 
-function Hero() {
+const Hero = (_: HeroProps) => {
   return (
-    <div>This is Hero section</div>
+    <div>
+      <h1>this is hero</h1>
+    </div>
   )
 }
 
