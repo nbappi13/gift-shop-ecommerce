@@ -1,22 +1,22 @@
-// Import required packages
+// import required packages
 const express = require("express")
 const cors = require("cors")
 const { MongoClient } = require("mongodb")
 require("dotenv").config()
 
-// Create Express app
+// create Express app
 const app = express()
 const PORT = process.env.PORT || 5000
 
-// Middleware - allows frontend to talk to backend
+// Middleware 
 app.use(cors())
 app.use(express.json())
 
-// MongoDB connection
+// mongoDB connection
 let db
 const client = new MongoClient(process.env.MONGODB_URI)
 
-// Connect to MongoDB when server starts
+// connect to mongoDB when server starts
 async function connectDB() {
   try {
     await client.connect()
@@ -27,12 +27,12 @@ async function connectDB() {
   }
 }
 
-// API Routes
+// API routes
 
-// Get all products
+// get all products
 app.get("/api/products", async (req, res) => {
   try {
-    // Get all products from database
+    // get all products from database
     const products = await db.collection("products").find({}).toArray()
     res.json(products)
   } catch (error) {
@@ -41,10 +41,10 @@ app.get("/api/products", async (req, res) => {
   }
 })
 
-// Get top selling products
+// get top selling products
 app.get("/api/products/top-selling", async (req, res) => {
   try {
-    // Find products where isTopSelling is true
+    // find products where isTopSelling is true
     const products = await db.collection("products").find({ isTopSelling: true }).toArray()
     res.json(products)
   } catch (error) {
@@ -53,10 +53,10 @@ app.get("/api/products/top-selling", async (req, res) => {
   }
 })
 
-// Get latest arrivals
+// get latest arrivals
 app.get("/api/products/latest", async (req, res) => {
   try {
-    // Find products where isLatestArrival is true
+    // find products where isLatestArrival is true
     const products = await db.collection("products").find({ isLatestArrival: true }).toArray()
     res.json(products)
   } catch (error) {
@@ -65,11 +65,11 @@ app.get("/api/products/latest", async (req, res) => {
   }
 })
 
-// Get single product by ID
+// get single product by ID
 app.get("/api/products/:id", async (req, res) => {
   try {
     const productId = req.params.id
-    // Find one product by ID
+    // find one product by ID
     const product = await db.collection("products").findOne({ id: productId })
 
     if (!product) {
@@ -83,8 +83,8 @@ app.get("/api/products/:id", async (req, res) => {
   }
 })
 
-// Start server
+// start server
 app.listen(PORT, () => {
   console.log(` Server running on port ${PORT}`)
-  connectDB() // Connect to database when server starts
+  connectDB() // connect to database when server starts
 })

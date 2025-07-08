@@ -1,7 +1,7 @@
 // API service to talk to our backend
 const API_BASE_URL = "http://localhost:5000/api"
 
-// Get all products from database
+// get all products from database
 export const getAllProducts = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/products`)
@@ -15,7 +15,7 @@ export const getAllProducts = async () => {
   }
 }
 
-// Get top selling products
+// get top selling products
 export const getTopSellingProducts = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/products/top-selling`)
@@ -29,7 +29,7 @@ export const getTopSellingProducts = async () => {
   }
 }
 
-// Get latest arrivals
+// get latest arrivals
 export const getLatestProducts = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/products/latest`)
@@ -43,7 +43,7 @@ export const getLatestProducts = async () => {
   }
 }
 
-// Get single product by ID
+// get single product by ID
 export const getProductById = async (id: string) => {
   try {
     const response = await fetch(`${API_BASE_URL}/products/${id}`)
