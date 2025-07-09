@@ -1,4 +1,3 @@
-"use client"
 
 type AboutProps = {
   // for future use if needed

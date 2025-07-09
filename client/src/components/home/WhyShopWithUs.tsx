@@ -1,5 +1,3 @@
-"use client"
-
 type WhyShopWithUsProps = {
   // for future use if needed
 }

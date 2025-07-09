@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { useCart } from "../../context/CartContext"
 import CheckoutModal from "../checkout/CheckoutModal"

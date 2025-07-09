@@ -1,4 +1,4 @@
-// API service to talk to our backend
+
 const API_BASE_URL = "http://localhost:5000/api"
 
 // get all products from database
