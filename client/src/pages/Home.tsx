@@ -3,6 +3,7 @@ import Hero from "../components/home/Hero"
 import ProductList from "../components/home/ProductList"
 import type { Product } from "../types"
 import { getTopSellingProducts, getLatestProducts } from "../services/api"
+import WhyShopWithUs from "../components/home/WhyShopWithUs"
 
 type HomeProps = {
   // for future use if needed
@@ -81,6 +82,8 @@ const Home = (_: HomeProps) => {
 
       {/* latest arrivals from database */}
       <ProductList products={latestProducts} title="✨ Latest Arrivals" onAddToCart={handleAddToCart} />
+
+      <WhyShopWithUs></WhyShopWithUs>
     </div>
   )
 }
