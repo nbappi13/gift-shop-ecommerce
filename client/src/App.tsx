@@ -3,6 +3,7 @@ import { CartProvider } from "./context/CartContext"
 import { WishlistProvider } from "./context/WishlistContext"
 import Layout from "./components/layout/Layout"
 import Home from "./pages/Home"
+import Products from "./pages/Products"
 import ProductDetail from "./pages/ProductDetail"
 
 type AppProps = {
@@ -17,6 +18,7 @@ const App = (_: AppProps) => {
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/products" element={<Products />} />
               <Route path="/product/:id" element={<ProductDetail />} />
               {/*  add more routes here later */}
             </Routes>
