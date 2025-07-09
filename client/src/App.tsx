@@ -5,6 +5,7 @@ import Layout from "./components/layout/Layout"
 import Home from "./pages/Home"
 import Products from "./pages/Products"
 import ProductDetail from "./pages/ProductDetail"
+import About from "./pages/About"
 
 type AppProps = {
   //  add props later if needed
@@ -20,6 +21,7 @@ const App = (_: AppProps) => {
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<Products />} />
               <Route path="/product/:id" element={<ProductDetail />} />
+              <Route path="/about" element={<About />} />
               {/*  add more routes here later */}
             </Routes>
           </Layout>
