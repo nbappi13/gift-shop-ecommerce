@@ -1,20 +1,19 @@
 "use client"
 
 import { useNavigate } from "react-router-dom"
+import { useCart } from "../../context/CartContext"
 import type { Product } from "../../types"
 
 type ProductCardProps = {
   product: Product
-  onAddToCart?: (product: Product) => void
 }
 
-const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
+const ProductCard = ({ product }: ProductCardProps) => {
   const navigate = useNavigate()
+  const { addToCart } = useCart()
 
   const handleAddToCart = () => {
-    if (onAddToCart) {
-      onAddToCart(product)
-    }
+    addToCart(product)
   }
 
   // navigate to product detail page
@@ -42,7 +41,7 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
 
   return (
     <div className="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow duration-300 w-full max-w-sm">
-      {/* product image */}
+      {/* product Image */}
       <figure className="px-4 pt-4">
         <img
           src={product.image || "/placeholder.svg"}
@@ -53,7 +52,7 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
 
       {/* card body */}
       <div className="card-body p-4">
-        {/* Product Name */}
+        {/* product name */}
         <h3 className="card-title text-lg font-semibold line-clamp-2 min-h-[3.5rem]">{product.name}</h3>
 
         {/* rating and reviews */}
