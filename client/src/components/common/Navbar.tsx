@@ -4,9 +4,10 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { useCart } from "../../context/CartContext"
 import CartSidebar from "../cart/CartSidebar"
+import WishlistDropdown from "../wishlist/WishlistDropdown"
 
 type NavbarProps = {
-  // have to add props later if needed
+  // add props later if needed
 }
 
 const Navbar = (_: NavbarProps) => {
@@ -21,7 +22,7 @@ const Navbar = (_: NavbarProps) => {
   return (
     <>
       <nav className="navbar bg-base-100 shadow-lg px-4">
-        {/* logo/brand */}
+        {/* logo/Brand */}
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -81,16 +82,10 @@ const Navbar = (_: NavbarProps) => {
         {/* right side icons */}
         <div className="navbar-end">
           <div className="flex items-center gap-2">
-            <button className="btn btn-ghost btn-circle">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                ></path>
-              </svg>
-            </button>
+            {/* wishlist Dropdown */}
+            <WishlistDropdown />
+
+            {/* cart button */}
             <button onClick={toggleCart} className="btn btn-ghost btn-circle">
               <div className="indicator">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,6 +101,8 @@ const Navbar = (_: NavbarProps) => {
                 )}
               </div>
             </button>
+
+            {/* user profile button */}
             <button className="btn btn-ghost btn-circle">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path

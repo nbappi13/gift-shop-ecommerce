@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
+import { useCart } from "../context/CartContext"
+import { useWishlist } from "../context/WishlistContext"
 import type { Product } from "../types"
 import { getProductById } from "../services/api"
 
@@ -12,6 +14,8 @@ type ProductDetailProps = {
 const ProductDetail = (_: ProductDetailProps) => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { addToCart } = useCart()
+  const { addToWishlist, isInWishlist } = useWishlist()
 
   // state for product data
   const [product, setProduct] = useState<Product | null>(null)
@@ -34,7 +38,7 @@ const ProductDetail = (_: ProductDetailProps) => {
         setProduct(productData)
       } catch (error) {
         console.error("error loading product:", error)
-        setError("failed to load product. please try again.")
+        setError("failed to load product. Please try again.")
       } finally {
         setLoading(false)
       }
@@ -43,19 +47,17 @@ const ProductDetail = (_: ProductDetailProps) => {
     loadProduct()
   }, [id])
 
-  // handle add to cart (have to implement cart context later)
-  const handleAddToCart = () => {
+  // handle add to cart
+  const handleAddToCart = async () => {
     if (product) {
-      console.log("added to cart:", product.name)
-      // TODO: have to implement cart functionality
+      await addToCart(product)
     }
   }
 
-  // handle add to wishlist (have to implement wishlist later)
+  // handle add to wishlist
   const handleAddToWishlist = () => {
     if (product) {
-      console.log("added to wishlist:", product.name)
-      // TODO:  have to implement wishlist functionality
+      addToWishlist(product)
     }
   }
 
@@ -119,7 +121,7 @@ const ProductDetail = (_: ProductDetailProps) => {
         </button>
       </div>
 
-      {/* product detail content */}
+      {/* product detail Content */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* product image */}
         <div className="flex justify-center">
@@ -169,7 +171,7 @@ const ProductDetail = (_: ProductDetailProps) => {
             <p className="text-gray-700 leading-relaxed">{product.description}</p>
           </div>
 
-          {/* action Buttons */}
+          {/* action buttons */}
           <div className="flex flex-col sm:flex-row gap-4">
             <button
               onClick={handleAddToCart}
@@ -187,8 +189,16 @@ const ProductDetail = (_: ProductDetailProps) => {
               {product.inStock ? "Add to Cart" : "Out of Stock"}
             </button>
 
-            <button onClick={handleAddToWishlist} className="btn btn-outline flex-1">
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button
+              onClick={handleAddToWishlist}
+              className={`btn btn-outline flex-1 ${isInWishlist(product.id) ? "btn-error" : ""}`}
+            >
+              <svg
+                className={`w-5 h-5 mr-2 ${isInWishlist(product.id) ? "fill-current" : ""}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -196,7 +206,7 @@ const ProductDetail = (_: ProductDetailProps) => {
                   d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                 ></path>
               </svg>
-              Add to Wishlist
+              {isInWishlist(product.id) ? "In Wishlist" : "Add to Wishlist"}
             </button>
           </div>
         </div>

@@ -1,6 +1,8 @@
 "use client"
 
+import { useState } from "react"
 import { useCart } from "../../context/CartContext"
+import CheckoutModal from "../checkout/CheckoutModal"
 
 type CartSidebarProps = {
   isOpen: boolean
@@ -9,6 +11,7 @@ type CartSidebarProps = {
 
 const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
   const { cartItems, updateQuantity, removeFromCart, getTotalPrice, getTotalItems, clearCart } = useCart()
+  const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false)
 
   // handle quantity increase
   const handleIncrease = (productId: string, currentQuantity: number) => {
@@ -25,15 +28,14 @@ const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
     removeFromCart(productId)
   }
 
-  // handle checkout 
+  // handle checkout
   const handleCheckout = () => {
-    console.log("Checkout clicked - will implement later")
-    // TODO: implement checkout functionality
+    setIsCheckoutModalOpen(true)
   }
 
   return (
     <>
-      {/* Click to close sidebar */}
+      {/* backdrop - click to close sidebar */}
       {isOpen && <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={onClose}></div>}
 
       {/* sidebar */}
@@ -53,7 +55,7 @@ const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
         </div>
 
         {/* cart content */}
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full pb-4">
           {/* cart items */}
           <div className="flex-1 overflow-y-auto p-4">
             {cartItems.length === 0 ? (
@@ -130,32 +132,41 @@ const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                 ))}
 
                 {/* clear cart button */}
-                {cartItems.length > 0 && (
-                  <button onClick={clearCart} className="btn btn-ghost btn-sm w-full text-red-500">
-                    Clear All Items
-                  </button>
-                )}
+                <button onClick={clearCart} className="btn btn-ghost btn-sm w-full text-red-500">
+                  Clear All Items
+                </button>
               </div>
             )}
           </div>
 
-          {/* cart footer - total and checkout */}
+          {/* cart footer - total and checkout - always show item exist */}
           {cartItems.length > 0 && (
-            <div className="border-t p-4 space-y-4">
-              {/* total amount */}
+            <div className="border-t p-12 space-y-4 bg-white">
+              {/* Total Amount */}
               <div className="flex justify-between items-center text-lg font-bold">
                 <span>Total:</span>
                 <span className="text-primary">${getTotalPrice().toFixed(2)}</span>
               </div>
 
-              {/* checkout button */}
-              <button onClick={handleCheckout} className="btn btn-primary w-full">
-                Checkout
+              {/* checkout button - main checkout button */}
+              <button onClick={handleCheckout} className="btn btn-primary w-full text-white font-semibold">
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                  ></path>
+                </svg>
+                Proceed to Checkout
               </button>
             </div>
           )}
         </div>
       </div>
+
+      {/* checkout modal */}
+      <CheckoutModal isOpen={isCheckoutModalOpen} onClose={() => setIsCheckoutModalOpen(false)} />
     </>
   )
 }
