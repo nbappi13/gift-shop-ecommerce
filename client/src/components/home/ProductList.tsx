@@ -18,7 +18,7 @@ const ProductList = ({ products, title, onAddToCart }: ProductListProps) => {
   }
 
   return (
-    <section className="py-8">
+    <section className="py-8 bg-gray-100">
       <div className="container mx-auto px-4">
         {/* section Title */}
         {title && (

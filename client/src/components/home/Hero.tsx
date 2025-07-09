@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-// Import images at the top
+
 import hero1 from "../../assets/hero1.webp"
 import hero2 from "../../assets/hero2.webp"
 import hero3 from "../../assets/hero3.webp"
@@ -14,18 +14,18 @@ const slides = [hero1, hero2, hero3]
 const Hero = (_: HeroProps) => {
   const [currentSlide, setCurrentSlide] = useState(0)
 
-  // Auto slide functionality
+  // auto slide functionality
   useEffect(() => {
     const slideInterval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 3000) // Change slide every 3 seconds
+    }, 3000) // change slide every 3 seconds
 
     return () => clearInterval(slideInterval)
   }, [])
 
   return (
     <div className="hero min-h-[500px] relative overflow-hidden">
-      {/* Background Images */}
+      {/* background images */}
       {slides.map((slide, index) => (
         <div
           key={index}
@@ -38,12 +38,12 @@ const Hero = (_: HeroProps) => {
             alt={`Hero slide ${index + 1}`}
             className="w-full h-full object-cover"
           />
-          {/* Overlay for readability */}
+          {/* overlay for readability */}
           <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         </div>
       ))}
 
-      {/* Content - Always visible */}
+      {/* content - always visible */}
       <div className="hero-content text-center relative z-10">
         <div className="max-w-md">
           <h1 className="text-5xl font-bold text-white drop-shadow-lg">
@@ -53,9 +53,7 @@ const Hero = (_: HeroProps) => {
           <p className="py-6 text-white drop-shadow-md">
             Discover unique and thoughtful gifts that bring joy to your loved ones.
           </p>
-          <div>
-            <button className="btn btn-primary btn-lg shadow-lg">Shop Now</button>
-          </div>
+          
         </div>
       </div>
 

@@ -6,7 +6,7 @@ type WhyShopWithUsProps = {
 
 const WhyShopWithUs = (_: WhyShopWithUsProps) => {
   return (
-    <section className="py-16 bg-base-200">
+    <section className="py-16 bg-stone-300">
       <div className="container mx-auto px-4">
         {/* section title */}
         <div className="text-center mb-12">

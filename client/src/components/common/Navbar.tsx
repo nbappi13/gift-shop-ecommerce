@@ -1,6 +1,4 @@
-"use client"
-
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { useCart } from "../../context/CartContext"
 import CartSidebar from "../cart/CartSidebar"
@@ -13,42 +11,68 @@ type NavbarProps = {
 const Navbar = (_: NavbarProps) => {
   const { getTotalItems } = useCart()
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
 
   // toggle cart sidebar
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen)
   }
 
+  // toggle mobile menu
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
+
   return (
     <>
-      <nav className="navbar bg-base-100 shadow-lg px-4">
-        {/* logo/Brand */}
+      {/* added sticky  */}
+      <nav className="navbar sticky top-0 z-50 transition-all bg-base-100 shadow-lg px-4">
+        {/* logo/Brand with spacing fix */}
         <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+          <div className="dropdown" ref={menuRef}>
+            <div 
+              tabIndex={0} 
+              role="button" 
+              className="btn btn-ghost lg:hidden"
+              onClick={toggleMenu}
+            >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16"></path>
               </svg>
             </div>
             <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              className={`menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 ${isMenuOpen ? 'block' : 'hidden'}`}
             >
               <li>
-                <Link to="/">Home</Link>
+                <Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link>
               </li>
               <li>
-                <Link to="/products">Products</Link>
+                <Link to="/products" onClick={() => setIsMenuOpen(false)}>Products</Link>
               </li>
               <li>
-                <Link to="/about">About</Link>
+                <Link to="/about" onClick={() => setIsMenuOpen(false)}>About</Link>
               </li>
               <li>
-                <Link to="/contact">Contact</Link>
+                <Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link>
               </li>
             </ul>
           </div>
-          <Link to="/" className="btn btn-ghost text-xl font-bold text-primary">
+          <Link to="/" className="btn btn-ghost text-xl font-bold text-primary mr-2 sm:mr-0">
             🎁 GiftShop
           </Link>
         </div>
@@ -79,9 +103,9 @@ const Navbar = (_: NavbarProps) => {
           </ul>
         </div>
 
-        {/* right side icons */}
+        {/* right side icons with spacing fix */}
         <div className="navbar-end">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             {/* wishlist Dropdown */}
             <WishlistDropdown />
 
