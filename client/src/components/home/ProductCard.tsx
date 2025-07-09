@@ -1,3 +1,6 @@
+"use client"
+
+import { useNavigate } from "react-router-dom"
 import type { Product } from "../../types"
 
 type ProductCardProps = {
@@ -6,10 +9,17 @@ type ProductCardProps = {
 }
 
 const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
+  const navigate = useNavigate()
+
   const handleAddToCart = () => {
     if (onAddToCart) {
       onAddToCart(product)
     }
+  }
+
+  // navigate to product detail page
+  const handleViewDetails = () => {
+    navigate(`/product/${product.id}`)
   }
 
   // simple star rating component
@@ -43,7 +53,7 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
 
       {/* card body */}
       <div className="card-body p-4">
-        {/* product name */}
+        {/* Product Name */}
         <h3 className="card-title text-lg font-semibold line-clamp-2 min-h-[3.5rem]">{product.name}</h3>
 
         {/* rating and reviews */}
@@ -58,8 +68,9 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
           {!product.inStock && <span className="text-sm text-red-500 font-medium">Out of Stock</span>}
         </div>
 
-        {/* add to cart button */}
-        <div className="card-actions">
+        {/* buttons */}
+        <div className="card-actions flex-col gap-2">
+          {/* add to cart button */}
           <button
             onClick={handleAddToCart}
             disabled={!product.inStock}
@@ -68,6 +79,11 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             }`}
           >
             {product.inStock ? "Add to Cart" : "Out of Stock"}
+          </button>
+
+          {/* view details button */}
+          <button onClick={handleViewDetails} className="btn btn-outline w-full">
+            View Details
           </button>
         </div>
 

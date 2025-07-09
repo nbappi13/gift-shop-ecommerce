@@ -21,7 +21,7 @@ const Home = (_: HomeProps) => {
       try {
         setLoading(true)
 
-        // get data from our backend API
+        // get data from backend api
         const [topSelling, latest] = await Promise.all([getTopSellingProducts(), getLatestProducts()])
 
         // update state with data from database
@@ -38,7 +38,7 @@ const Home = (_: HomeProps) => {
     loadProducts()
   }, [])
 
-  // handle add to cart (temporary - i'll implement cart context later)
+  // handle add to cart (have to implement cart context later)
   const handleAddToCart = (product: Product) => {
     console.log("added to cart:", product.name)
     // TODO: implement cart functionality
