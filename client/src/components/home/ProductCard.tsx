@@ -6,14 +6,18 @@ import type { Product } from "../../types"
 
 type ProductCardProps = {
   product: Product
+  onAddToCart?: (product: Product) => void
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
   const navigate = useNavigate()
   const { addToCart } = useCart()
 
   const handleAddToCart = () => {
     addToCart(product)
+    if (onAddToCart) {
+      onAddToCart(product)
+    }
   }
 
   // navigate to product detail page
@@ -41,7 +45,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <div className="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow duration-300 w-full max-w-sm">
-      {/* product Image */}
+      {/* product image */}
       <figure className="px-4 pt-4">
         <img
           src={product.image || "/placeholder.svg"}

@@ -1,5 +1,6 @@
-
 import { useState, useEffect } from "react"
+
+// Import images at the top
 import hero1 from "../../assets/hero1.webp"
 import hero2 from "../../assets/hero2.webp"
 import hero3 from "../../assets/hero3.webp"
@@ -8,19 +9,19 @@ type HeroProps = {
   // for future use if needed
 }
 
+const slides = [hero1, hero2, hero3]
+
 const Hero = (_: HeroProps) => {
   const [currentSlide, setCurrentSlide] = useState(0)
-
-  const slides = [hero1, hero2, hero3]
 
   // Auto slide functionality
   useEffect(() => {
     const slideInterval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 3000) // Change slide every 4 seconds
+    }, 3000) // Change slide every 3 seconds
 
     return () => clearInterval(slideInterval)
-  }, [slides.length])
+  }, [])
 
   return (
     <div className="hero min-h-[500px] relative overflow-hidden">
