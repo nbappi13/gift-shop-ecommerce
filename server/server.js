@@ -1,4 +1,4 @@
-// import required packages
+
 const express = require("express")
 const cors = require("cors")
 const { MongoClient } = require("mongodb")
@@ -9,14 +9,22 @@ const app = express()
 const PORT = process.env.PORT || 5000
 
 // Middleware 
-app.use(cors())
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000", // local development
+      // have to put netlify live link
+    ],
+    credentials: true,
+  }),
+)
 app.use(express.json())
 
-// mongoDB connection
+// mongodb connection
 let db
 const client = new MongoClient(process.env.MONGODB_URI)
 
-// connect to mongoDB when server starts
+// connect to mongodb when server starts
 async function connectDB() {
   try {
     await client.connect()
@@ -27,11 +35,10 @@ async function connectDB() {
   }
 }
 
-
-// Root route - shows server is running
+// root route - shows server is running
 app.get("/", (req, res) => {
   res.json({
-    message: "api server is running!",
+    message: " GiftShop API server is running!",
     status: "success",
     endpoints: {
       "All Products": "/api/products",
@@ -45,7 +52,6 @@ app.get("/", (req, res) => {
 // get all products
 app.get("/api/products", async (req, res) => {
   try {
-    // get all products from database
     const products = await db.collection("products").find({}).toArray()
     res.json(products)
   } catch (error) {
@@ -57,7 +63,6 @@ app.get("/api/products", async (req, res) => {
 // get top selling products
 app.get("/api/products/top-selling", async (req, res) => {
   try {
-    // find products where isTopSelling is true
     const products = await db.collection("products").find({ isTopSelling: true }).toArray()
     res.json(products)
   } catch (error) {
@@ -69,7 +74,6 @@ app.get("/api/products/top-selling", async (req, res) => {
 // get latest arrivals
 app.get("/api/products/latest", async (req, res) => {
   try {
-    // find products where isLatestArrival is true
     const products = await db.collection("products").find({ isLatestArrival: true }).toArray()
     res.json(products)
   } catch (error) {
@@ -82,7 +86,6 @@ app.get("/api/products/latest", async (req, res) => {
 app.get("/api/products/:id", async (req, res) => {
   try {
     const productId = req.params.id
-    // find one product by ID
     const product = await db.collection("products").findOne({ id: productId })
 
     if (!product) {
@@ -91,7 +94,7 @@ app.get("/api/products/:id", async (req, res) => {
 
     res.json(product)
   } catch (error) {
-    console.error("Error getting product:", error)
+    console.error("error getting product:", error)
     res.status(500).json({ error: "failed to get product" })
   }
 })
@@ -101,3 +104,6 @@ app.listen(PORT, () => {
   console.log(` server running on port ${PORT}`)
   connectDB() // connect to database when server starts
 })
+
+// export for vercel
+module.exports = app
