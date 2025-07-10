@@ -7,7 +7,7 @@ const app = express()
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://my-client-site.netlify.app"],
+    origin: ["http://localhost:3000", "https://gift-shop-now.netlify.app/"],
     credentials: true,
   })
 )
