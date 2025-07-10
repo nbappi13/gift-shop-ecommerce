@@ -1,58 +1,57 @@
-
-const API_BASE_URL = "http://localhost:5000/api"
+const API_BASE_URL = "https://server-beryl-eta.vercel.app/api";
 
 // get all products from database
 export const getAllProducts = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/products`)
+    const response = await fetch(`${API_BASE_URL}/products`);
     if (!response.ok) {
-      throw new Error("failed to get products")
+      throw new Error("failed to get products");
     }
-    return await response.json()
+    return await response.json();
   } catch (error) {
-    console.error("error getting products:", error)
-    throw error
+    console.error("error getting products:", error);
+    throw error;
   }
-}
+};
 
 // get top selling products
 export const getTopSellingProducts = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/products/top-selling`)
+    const response = await fetch(`${API_BASE_URL}/products/top-selling`);
     if (!response.ok) {
-      throw new Error("failed to get top selling products")
+      throw new Error("failed to get top selling products");
     }
-    return await response.json()
+    return await response.json();
   } catch (error) {
-    console.error("error getting top selling products:", error)
-    throw error
+    console.error("error getting top selling products:", error);
+    throw error;
   }
-}
+};
 
 // get latest arrivals
 export const getLatestProducts = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/products/latest`)
+    const response = await fetch(`${API_BASE_URL}/products/latest`);
     if (!response.ok) {
-      throw new Error("failed to get latest products")
+      throw new Error("failed to get latest products");
     }
-    return await response.json()
+    return await response.json();
   } catch (error) {
-    console.error("error getting latest products:", error)
-    throw error
+    console.error("error getting latest products:", error);
+    throw error;
   }
-}
+};
 
 // get single product by ID
 export const getProductById = async (id: string) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/products/${id}`)
+    const response = await fetch(`${API_BASE_URL}/products/${id}`);
     if (!response.ok) {
-      throw new Error("failed to get product")
+      throw new Error("failed to get product");
     }
-    return await response.json()
+    return await response.json();
   } catch (error) {
-    console.error("error getting product:", error)
-    throw error
+    console.error("error getting product:", error);
+    throw error;
   }
-}
+};
